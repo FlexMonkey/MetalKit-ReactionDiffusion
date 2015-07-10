@@ -12,6 +12,10 @@
 		BEB87E641B4EB1F6006B1E53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEB87E621B4EB1F6006B1E53 /* Main.storyboard */; };
 		BEB87E661B4EB1F6006B1E53 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEB87E651B4EB1F6006B1E53 /* Assets.xcassets */; };
 		BEB87E691B4EB1F6006B1E53 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEB87E671B4EB1F6006B1E53 /* LaunchScreen.storyboard */; };
+		BEB87E711B4EB254006B1E53 /* ReactionDiffusionMetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB87E701B4EB254006B1E53 /* ReactionDiffusionMetalView.swift */; };
+		BEB87E751B4EB5FF006B1E53 /* grayScottNoisySquare.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BEB87E741B4EB5FF006B1E53 /* grayScottNoisySquare.jpg */; };
+		BEB87E771B4EB703006B1E53 /* ReactionDiffusion.metal in Sources */ = {isa = PBXBuildFile; fileRef = BEB87E761B4EB703006B1E53 /* ReactionDiffusion.metal */; };
+		BEB87E791B4EBF69006B1E53 /* colorNoise.png in Resources */ = {isa = PBXBuildFile; fileRef = BEB87E781B4EBF69006B1E53 /* colorNoise.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +26,10 @@
 		BEB87E651B4EB1F6006B1E53 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BEB87E681B4EB1F6006B1E53 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BEB87E6A1B4EB1F6006B1E53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BEB87E701B4EB254006B1E53 /* ReactionDiffusionMetalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReactionDiffusionMetalView.swift; sourceTree = "<group>"; };
+		BEB87E741B4EB5FF006B1E53 /* grayScottNoisySquare.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = grayScottNoisySquare.jpg; sourceTree = "<group>"; };
+		BEB87E761B4EB703006B1E53 /* ReactionDiffusion.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = ReactionDiffusion.metal; sourceTree = "<group>"; };
+		BEB87E781B4EBF69006B1E53 /* colorNoise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = colorNoise.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,12 +62,16 @@
 		BEB87E5D1B4EB1F6006B1E53 /* MetalKitReactionDiffusion */ = {
 			isa = PBXGroup;
 			children = (
+				BEB87E781B4EBF69006B1E53 /* colorNoise.png */,
+				BEB87E741B4EB5FF006B1E53 /* grayScottNoisySquare.jpg */,
 				BEB87E5E1B4EB1F6006B1E53 /* AppDelegate.swift */,
 				BEB87E601B4EB1F6006B1E53 /* ViewController.swift */,
 				BEB87E621B4EB1F6006B1E53 /* Main.storyboard */,
 				BEB87E651B4EB1F6006B1E53 /* Assets.xcassets */,
 				BEB87E671B4EB1F6006B1E53 /* LaunchScreen.storyboard */,
 				BEB87E6A1B4EB1F6006B1E53 /* Info.plist */,
+				BEB87E701B4EB254006B1E53 /* ReactionDiffusionMetalView.swift */,
+				BEB87E761B4EB703006B1E53 /* ReactionDiffusion.metal */,
 			);
 			path = MetalKitReactionDiffusion;
 			sourceTree = "<group>";
@@ -122,7 +134,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEB87E691B4EB1F6006B1E53 /* LaunchScreen.storyboard in Resources */,
+				BEB87E791B4EBF69006B1E53 /* colorNoise.png in Resources */,
 				BEB87E661B4EB1F6006B1E53 /* Assets.xcassets in Resources */,
+				BEB87E751B4EB5FF006B1E53 /* grayScottNoisySquare.jpg in Resources */,
 				BEB87E641B4EB1F6006B1E53 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -134,7 +148,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEB87E771B4EB703006B1E53 /* ReactionDiffusion.metal in Sources */,
 				BEB87E611B4EB1F6006B1E53 /* ViewController.swift in Sources */,
+				BEB87E711B4EB254006B1E53 /* ReactionDiffusionMetalView.swift in Sources */,
 				BEB87E5F1B4EB1F6006B1E53 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
