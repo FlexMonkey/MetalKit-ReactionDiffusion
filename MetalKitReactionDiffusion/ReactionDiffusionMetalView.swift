@@ -10,6 +10,9 @@ import Metal
 import MetalKit
 import MetalPerformanceShaders
 
+let Width = 2048
+let Height = 1536
+
 class ReactionDiffusionMetalView: MTKView
 {
     var pipelineState: MTLComputePipelineState!
@@ -21,7 +24,7 @@ class ReactionDiffusionMetalView: MTKView
     var resetFlag = true
     
     let bitsPerComponent = Int(8)
-    let bytesPerRow = Int(4 * 2048)
+    let bytesPerRow = Int(4 * Width)
     let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
     let bitmapInfo = CGBitmapInfo.ByteOrder32Big.rawValue | CGImageAlphaInfo.PremultipliedLast.rawValue
     
@@ -51,15 +54,17 @@ class ReactionDiffusionMetalView: MTKView
         }
         
         threadsPerThreadgroup = MTLSizeMake(16, 16, 1)
-        threadgroupsPerGrid = MTLSizeMake(2048 / threadsPerThreadgroup.width, 1536 / threadsPerThreadgroup.height, 1)
+        threadgroupsPerGrid = MTLSizeMake(Width / threadsPerThreadgroup.width, Height / threadsPerThreadgroup.height, 1)
         
         // set up texture
    
-        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(MTLPixelFormat.RGBA8Unorm, width: Int(2048), height: Int(1536), mipmapped: false)
+        let textureDescriptor = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(MTLPixelFormat.RGBA8Unorm,
+            width: Width, height: Height,
+            mipmapped: false)
         
         textureA = device!.newTextureWithDescriptor(textureDescriptor)
-        let outTextureDescriptor = MTLTextureDescriptor.texture2DDescriptorWithPixelFormat(textureA.pixelFormat, width: textureA.width, height: textureA.height, mipmapped: false)
-        textureB = device!.newTextureWithDescriptor(outTextureDescriptor)
+
+        textureB = device!.newTextureWithDescriptor(textureDescriptor)
         
         blur = MPSImageGaussianBlur(device: device!, sigma: 3)
     }
@@ -78,16 +83,22 @@ class ReactionDiffusionMetalView: MTKView
         {
             resetFlag = false
             
-            let imageRef = UIImage(named: "colorNoise.png")!.CGImage!
+            let noise = MDLNoiseTexture(scalarNoiseWithSmoothness: 0.75,
+                name: nil,
+                textureDimensions: [Int32(Width), Int32(Height)],
+                channelCount: 4,
+                channelEncoding: MDLTextureChannelEncoding.UInt8,
+                grayscale: false)
             
-            var rawData = [UInt8](count: Int(2048 * 1536 * 4), repeatedValue: 0)
-            let context = CGBitmapContextCreate(&rawData, 2048, 1536, bitsPerComponent, bytesPerRow, rgbColorSpace, bitmapInfo)
+            let noiseData = noise.texelDataWithBottomLeftOrigin()
             
-            CGContextDrawImage(context, CGRectMake(0, 0, 2048, 1536), imageRef)
+            let region = MTLRegionMake2D(0, 0, Int(Width), Int(Height))
             
-            let region = MTLRegionMake2D(0, 0, Int(2048), Int(1536))
-            textureA.replaceRegion(region, mipmapLevel: 0, withBytes: &rawData, bytesPerRow: Int(bytesPerRow))
-            textureB.replaceRegion(region, mipmapLevel: 0, withBytes: &rawData, bytesPerRow: Int(bytesPerRow))
+            if let noiseData = noiseData
+            {
+                textureA.replaceRegion(region, mipmapLevel: 0, withBytes: noiseData.bytes, bytesPerRow: Int(bytesPerRow))
+                textureB.replaceRegion(region, mipmapLevel: 0, withBytes: noiseData.bytes, bytesPerRow: Int(bytesPerRow))
+            }
         }
         
         print("first pass")
@@ -163,18 +174,5 @@ struct ReactionDiffusionParameters
     var k1: Float = 2.055
     var k2: Float = 2.00920
     var k3: Float =  0.5563
-    
-    // Gray Scott
-    
-    var F: Float = 0.033945
-    var K: Float = 0.067461
-    var Du: Float = 0.144531
-    var Dv: Float = 0.046387
-    
-    // Belousov-Zhabotinsky
-    
-    var alpha: Float = 1.0
-    var beta: Float = 1.0
-    var gamma: Float = 1.0
     
 }
