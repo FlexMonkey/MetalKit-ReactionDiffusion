@@ -57,14 +57,14 @@ kernel void fitzhughNagumoShader(texture2d<float, access::read> inTexture [[text
     const float tweakedEpsilon = params.epsilon - parameterGradientTexture.read(gid).r * 0.4;
     const float tweakedDelta = params.delta - parameterGradientTexture.read(gid).r * 1.25 ;
     
-    const float tweakedk1= params.k1 - parameterGradientTexture.read(gid).r * 0.03;
+    const float tweakedk1= params.k1 - parameterGradientTexture.read(gid).r * 0.04;
     const float tweakedk2 = params.k2 - parameterGradientTexture.read(gid).r * 1.75;
     const float tweakedk3 = params.k3 + parameterGradientTexture.read(gid).r * 1.5;
     
     const float delta_a = (tweakedk1 * a) - (tweakedk2 * a * a) - (a * a * a) - b + laplacian_a;
     const float delta_b = tweakedEpsilon * (tweakedk3 * a - tweakedA1 * b - tweakedA0) + tweakedDelta * laplacian_b;
     
-    const float4 outColor(0.01 * parameterGradientTexture.read(gid).r + a + (tweakedTimestep * delta_a),
+    const float4 outColor(0.02 * parameterGradientTexture.read(gid).r + a + (tweakedTimestep * delta_a),
                           (b + (tweakedTimestep * delta_b)) * parameterGradientTexture.read(gid).r * (a + (tweakedTimestep * delta_a)),
                           b + (tweakedTimestep * delta_b),
                           1);
