@@ -100,9 +100,7 @@ class ReactionDiffusionMetalView: MTKView
                 textureB.replaceRegion(region, mipmapLevel: 0, withBytes: noiseData.bytes, bytesPerRow: Int(bytesPerRow))
             }
         }
-        
-        print("first pass")
-        
+  
         let commandBuffer = commandQueue.commandBuffer()
         let commandEncoder = commandBuffer.computeCommandEncoder()
         
@@ -114,7 +112,7 @@ class ReactionDiffusionMetalView: MTKView
         
         commandEncoder.setBuffer(buffer, offset: 0, atIndex: 0)
         
-        for _ in 0 ... 8
+        for _ in 0 ... 4
         {
             if useTextureAForInput
             {
