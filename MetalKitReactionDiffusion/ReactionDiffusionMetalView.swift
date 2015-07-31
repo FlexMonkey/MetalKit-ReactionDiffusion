@@ -33,11 +33,9 @@ class ReactionDiffusionMetalView: MTKView
     var useTextureAForInput = true
     var blur: MPSImageGaussianBlur!
     
-    override init(frame: CGRect)
+    required init(frame: CGRect)
     {
-        super.init(frame: frame)
-        
-        device = MTLCreateSystemDefaultDevice()
+        super.init(frame: frame, device: MTLCreateSystemDefaultDevice())
         
         defaultLibrary = device!.newDefaultLibrary()!
         commandQueue = device!.newCommandQueue()
@@ -151,7 +149,7 @@ class ReactionDiffusionMetalView: MTKView
 
     }
     
-    required init?(coder aDecoder: NSCoder)
+    required init(coder aDecoder: NSCoder)
     {
         fatalError("init(coder:) has not been implemented")
     }

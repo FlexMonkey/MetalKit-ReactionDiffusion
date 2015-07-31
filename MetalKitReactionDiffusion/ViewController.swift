@@ -14,7 +14,6 @@ import MetalPerformanceShaders
 
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate
 {
-    var device:MTLDevice!
     let metalView = ReactionDiffusionMetalView(frame: CGRectZero)
     
     var videoTextureCache : Unmanaged<CVMetalTextureCacheRef>?
@@ -61,16 +60,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     private func setUpMetal()
     {
-        guard let device = MTLCreateSystemDefaultDevice() else
-        {
-            return
-        }
-        
-        self.device = device
-        
         metalView.framebufferOnly = false
 
-        CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, device, nil, &videoTextureCache)
+        CVMetalTextureCacheCreate(kCFAllocatorDefault, nil, metalView.device!, nil, &videoTextureCache)
     }
 
     func captureOutput(captureOutput: AVCaptureOutput!, didOutputSampleBuffer sampleBuffer: CMSampleBuffer!, fromConnection connection: AVCaptureConnection!)
